@@ -35,12 +35,10 @@
  '((html-cfm
     :submode js-mode
     :front "<cfscript>"
-    :back "</cfscript>")))
-
-(mmm-add-classes
- '((cfc-script
+    :back "</cfscript>")
+   (cfc-script
     :submode js-mode
-    :front "\\`\\(component\\|/*\\)"
+    :front "\\`\\(component\\|\\/\\*\\)"
     :back "\\'")))
 
 (setq initial-scratch-message "")
