@@ -43,9 +43,7 @@
 
 (setq initial-scratch-message "")
 (when *is-windows*
-  (set-face-attribute 'default nil :font "Cosmic Sans Neue Mono 12")
-  ;; start maximised
-  (w32-send-sys-command 61488))
+  (set-face-attribute 'default nil :font "Cosmic Sans Neue Mono 12"))
 (load-theme 'monokai t)
 
 (menu-bar-mode -1)
