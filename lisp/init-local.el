@@ -41,11 +41,26 @@
     :front "\\`\\(component\\|\\/\\*\\)"
     :back "\\'")))
 
+(setq mmm-submode-decoration-level 0)
 (setq initial-scratch-message "")
 (when *is-windows*
-  (set-face-attribute 'default nil :font "Cosmic Sans Neue Mono 12"))
+  (set-face-attribute 'default nil :font "Fantasque Sans Mono 12"))
 (load-theme 'monokai t)
 
 (menu-bar-mode -1)
+
+(setq cider-repl-use-pretty-printing nil)
+
+;; use spaces instead of tabs
+(setq sgml-basic-offset 4)
+;;(setq c-basic-indent 2)
+(setq tab-width 4)
+(setq indent-tabs-mode nil)
+
+(add-hook 'html-mode-hook
+          (lambda ()
+            (turn-off-auto-fill)
+            (set (make-local-variable 'electric-indent-functions)
+                 (list (lambda (arg) 'no-indent)))))
 
 (provide 'init-local)
