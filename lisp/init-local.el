@@ -63,4 +63,13 @@
             (set (make-local-variable 'electric-indent-functions)
                  (list (lambda (arg) 'no-indent)))))
 
+;; override the default keybindings in paredit
+
+(eval-after-load 'paredit
+  '(progn
+     (define-key paredit-mode-map (kbd "<M-right>") 'paredit-forward-slurp-sexp)
+     (define-key paredit-mode-map (kbd "<M-left>") 'paredit-forward-barf-sexp)
+     (define-key paredit-mode-map (kbd "<C-right>") nil)
+     (define-key paredit-mode-map (kbd "<C-left>") nil)))
+
 (provide 'init-local)
