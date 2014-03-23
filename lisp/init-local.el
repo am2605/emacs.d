@@ -22,9 +22,6 @@
     :front "<\\?\\(php\\)?"
     :back "\\?>")))
 
-(autoload 'php-mode "php-mode" "PHP editing mode" t)
-(add-to-list 'auto-mode-alist '("\\.php3?\\'" . html-mode))
-
 ;; Use mmm-mode for highlighting of cfscript blocks in cfml files
 
 (mmm-add-mode-ext-class nil "\\.cfm\\'" 'html-cfm)
