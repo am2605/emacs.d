@@ -1,18 +1,45 @@
 (defconst *is-windows* (string-equal system-type "windows-nt"))
 
+;; markdown mode
+(add-to-list 'auto-mode-alist
+             '("\\.md\\'" . markdown-mode))
 ;; choose modes for CFML automatically
-(add-to-list 'magic-mode-alist
-             '("<cfcomponent" . html-mode))
-(add-to-list 'magic-mode-alist
-             '("<!---" . html-mode))
 (add-to-list 'auto-mode-alist
              '("\\.cfm\\'" . html-mode))
 (add-to-list 'auto-mode-alist
-             '("\\.cfc\\'" . js-mode))
-             
+             '("\\.cfc\\'" . html-mode))
+
+(require 'mmm-mode)
+
+(setq mmm-global-mode 'maybe)
+(mmm-add-mode-ext-class nil "\\.php3?\\'" 'html-php)
+(mmm-add-classes
+ '((html-php
+    :submode php-mode
+    :front "<\\?\\(php\\)?"
+    :back "\\?>")))
+
+;; Use mmm-mode for highlighting of cfscript blocks in cfml files
+
+(mmm-add-mode-ext-class nil "\\.cfm\\'" 'html-cfm)
+(mmm-add-mode-ext-class nil "\\.cfc\\'" 'html-cfm)
+(mmm-add-mode-ext-class nil "\\.cfc\\'" 'cfc-script)
+
+(mmm-add-classes
+ '((html-cfm
+    :submode js-mode
+    :front "<cfscript>"
+    :back "</cfscript>")
+   (cfc-script
+    :submode js-mode
+    :front "\\`\\(component\\|\\/\\*\\)"
+    :back "\\'")))
+
+(setq mmm-submode-decoration-level 0)
 (setq initial-scratch-message "")
 (when *is-windows*
-  (set-face-attribute 'default nil :font "Source Code Pro 11"))
+  (set-face-attribute 'default nil :font "Consolas 11"))
+(load-theme 'sanityinc-solarized-light t)
 
 (menu-bar-mode -1)
 
@@ -20,19 +47,11 @@
 
 ;; use spaces instead of tabs
 (setq sgml-basic-offset 4)
-(setq c-basic-offset 4)
-(setq js-basic-offset 4)
-(setq js-indent-level 4)
+;;(setq c-basic-indent 2)
 (setq tab-width 4)
 (setq indent-tabs-mode nil)
 
 (add-hook 'html-mode-hook
-          (lambda ()
-            (setq tab-stop-list (number-sequence 4 120 4))
-            (setq indent-line-function 'no-indent)
-            ))
-
-(add-hook 'js-mode-hook
           (lambda ()
             (turn-off-auto-fill)
             (set (make-local-variable 'electric-indent-functions)
@@ -46,7 +65,5 @@
      (define-key paredit-mode-map (kbd "<M-left>") 'paredit-forward-barf-sexp)
      (define-key paredit-mode-map (kbd "<C-right>") nil)
      (define-key paredit-mode-map (kbd "<C-left>") nil)))
-
-(setq-default custom-enabled-themes '(monokai))
 
 (provide 'init-local)
