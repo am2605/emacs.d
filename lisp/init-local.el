@@ -1,5 +1,8 @@
 (defconst *is-windows* (string-equal system-type "windows-nt"))
 
+(setq exec-path (add-to-list 'exec-path "D:/Applications/Gow/bin"))
+(setenv "PATH" (concat "D:\\Applications\\Gow\\bin;" (getenv "PATH")))
+
 (require 'mmm-mode)
 ;; choose modes for CFML automatically
 (add-to-list 'auto-mode-alist
@@ -44,18 +47,26 @@
 (when *is-windows*
   (set-face-attribute 'default nil :font "Consolas 11"))
 
-(load-theme 'sanityinc-solarized-light t)
+(load-theme 'sanityinc-tomorrow-blue t)
 
 (menu-bar-mode -1)
 
 (setq sgml-basic-offset 4)
 (setq js-indent-level 4)
 
+;; (add-hook 'sgml-mode-hook
+;;           (lambda ()
+;;             ;; Default indentation to 2, but let SGML mode guess, too.
+;;             (set (make-local-variable 'sgml-basic-offset) 2)
+;;             (sgml-guess-indent)))
+
 (add-hook 'html-mode-hook
           (lambda ()
+            (local-set-key (kbd "RET") 'newline)
             (setq tab-stop-list (number-sequence sgml-basic-offset 120 sgml-basic-offset))
-            (setq indent-line-function 'indent-relative)
-            (set (make-local-variable 'electric-indent-mode) nil)))
+            (setq indent-line-function 'tab-to-tab-stop)
+            (electric-indent-local-mode -1)
+            ))
 
 (add-hook 'js-mode-hook
           (lambda ()
@@ -63,24 +74,38 @@
             (set (make-local-variable 'electric-indent-functions)
                  (list (lambda (arg) 'indent-relative)))))
 
-(global-set-key (kbd "<backtab>")
-                (lambda ()
-                  (interactive)
-                  (un-indent-by-removing-x-spaces sgml-basic-offset)))
+(global-set-key (kbd "<S-tab>") 'un-indent-by-removing-4-spaces)
 
-(defun un-indent-by-removing-x-spaces (num-spaces)
-  "remove spaces from beginning of of line"
+(defun un-indent-by-removing-4-spaces ()
+  "remove 4 spaces from beginning of of line"
+  (interactive)
   (save-excursion
     (save-match-data
       (beginning-of-line)
-      get rid of tabs at beginning of line
+      ;; get rid of tabs at beginning of line
       (when (looking-at "^\\s-+")
         (untabify (match-beginning 0) (match-end 0)))
-      (when (looking-at (concat "^" (make-string num-spaces ?\s)))
+      (when (looking-at "^    ")
         (replace-match "")))))
 
-(require 'evil)
-(evil-mode 1)
+;; (global-set-key (kbd "<backtab>")
+;;                 (lambda ()
+;;                   (interactive)
+;;                   (un-indent-by-removing-x-spaces sgml-basic-offset)))
+
+;; (defun un-indent-by-removing-x-spaces (num-spaces)
+;;   "remove spaces from beginning of of line"
+;;   (save-excursion
+;;     (save-match-data
+;;       (beginning-of-line)
+;;       get rid of tabs at beginning of line
+;;       (when (looking-at "^\\s-+")
+;;         (untabify (match-beginning 0) (match-end 0)))
+;;       (when (looking-at (concat "^" (make-string num-spaces ?\s)))
+;;         (replace-match "")))))
+
+;; (require 'evil)
+;; (evil-mode 1)
 
 (setq-default flycheck-disabled-checkers '(php))
 
@@ -98,5 +123,7 @@
 (require 'projectile)
 (projectile-global-mode)
 (setq projectile-indexing-method 'alien)
+
+(setq flycheck-disabled-checkers '(sh-shellscript sh-bash sh-zsh sh-posix-bash))
 
 (provide 'init-local)
