@@ -39,6 +39,7 @@
 
 (setq sgml-basic-offset 4)
 (setq js-indent-level 4)
+(setq js2-basic-offset 4)
 
 ;; (add-hook 'sgml-mode-hook
 ;;           (lambda ()
@@ -46,9 +47,9 @@
 ;;             (set (make-local-variable 'sgml-basic-offset) 2)
 ;;             (sgml-guess-indent)))
 
-(add-hook 'js-mode-hook
-          (lambda ()
-            (js2-mode-hide-warnings-and-errors)))
+(add-hook 'js2-mode-hook
+          'js2-mode-hide-warnings-and-errors)
+
 
 (add-hook 'web-mode-hook
           (lambda ()
@@ -107,5 +108,10 @@
 (setq projectile-indexing-method 'alien)
 
 (setq flycheck-disabled-checkers '(php sh-shellscript sh-bash sh-zsh sh-posix-bash))
+
+(setq backup-directory-alist
+      `((".*" . ,temporary-file-directory)))
+(setq auto-save-file-name-transforms
+      `((".*" ,temporary-file-directory t)))
 
 (provide 'init-local)
