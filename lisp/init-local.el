@@ -51,13 +51,19 @@
           'js2-mode-hide-warnings-and-errors)
 
 
+(defun my-enter ()
+  "Inserts a newline character then indents the new line just like the previous line"
+  (interactive)
+  (newline)
+  (unless (looking-back "\\`\n*")
+    (indent-relative-maybe)))
+
 (add-hook 'web-mode-hook
           (lambda ()
-            (local-set-key (kbd "RET") 'newline)
+            (local-set-key (kbd "RET") 'my-enter)
             (setq tab-stop-list (number-sequence sgml-basic-offset 120 sgml-basic-offset))
             (setq indent-line-function 'tab-to-tab-stop)
-            (electric-indent-local-mode -1)
-            ))
+            (electric-indent-local-mode -1)))
 
 (global-set-key (kbd "<S-tab>") 'un-indent-by-removing-4-spaces)
 
