@@ -3,49 +3,30 @@
 (setq exec-path (add-to-list 'exec-path "D:/Applications/Gow/bin"))
 (setenv "PATH" (concat "D:\\Applications\\Gow\\bin;" (getenv "PATH")))
 
-(require 'mmm-mode)
 ;; choose modes for CFML automatically
 (add-to-list 'auto-mode-alist
-             '("\\.cfm\\'" . html-mode))
+             '("\\.md\\'" . markdown-mode))
+;; choose modes for CFML automatically
+(add-to-list 'magic-mode-alist
+             '("<cfcomponent" . web-mode))
+(add-to-list 'magic-mode-alist
+             '("<!---" . web-mode))
 (add-to-list 'auto-mode-alist
-             '("\\.cfc\\'" . html-mode))
-
-(require 'package)
+             '("\\.cfm\\'" . web-mode))
+(add-to-list 'auto-mode-alist
+             '("\\.cfc\\'" . js2-mode))
 
 ;; ensure default set of packages is installed
 (when (not package-archive-contents)
   (package-refresh-contents))
 
 ;; Add in your own as you wish:
-(defvar my-packages '(evil groovy-mode projectile)
+(defvar my-packages '(evil groovy-mode projectile web-mode)
   "A list of packages to ensure are installed at launch.")
 
 (dolist (p my-packages)
   (when (not (package-installed-p p))
     (package-install p)))
-
-;; Use mmm-mode for highlighting of cfscript blocks in cfml files
-(setq mmm-global-mode 'maybe)
-(mmm-add-mode-ext-class nil "\\.cfm\\'" 'html-cfm)
-(mmm-add-mode-ext-class nil "\\.cfm\\'" 'cfm-js)
-(mmm-add-mode-ext-class nil "\\.cfc\\'" 'html-cfm)
-(mmm-add-mode-ext-class nil "\\.cfc\\'" 'cfc-script)
-
-(mmm-add-classes
- '((html-cfm
-    :submode js-mode
-    :front "<cfscript>"
-    :back "[ \t]*</cfscript>")
-   (cfc-script
-    :submode js-mode
-    :front "\\`\\(component\\|\\/\\*\\)"
-    :back "\\'")
-   (cfm-js
-    :submode js-mode
-    :front "<script[^>]*>[ \t]*\n?"
-    :back "[ \t]*</script>")))
-
-(setq mmm-submode-decoration-level 0)
 
 (setq initial-scratch-message "")
 
@@ -65,19 +46,17 @@
 ;;             (set (make-local-variable 'sgml-basic-offset) 2)
 ;;             (sgml-guess-indent)))
 
-(add-hook 'html-mode-hook
+(add-hook 'js-mode-hook
+          (lambda ()
+            (js2-mode-hide-warnings-and-errors)))
+
+(add-hook 'web-mode-hook
           (lambda ()
             (local-set-key (kbd "RET") 'newline)
             (setq tab-stop-list (number-sequence sgml-basic-offset 120 sgml-basic-offset))
             (setq indent-line-function 'tab-to-tab-stop)
             (electric-indent-local-mode -1)
             ))
-
-(add-hook 'js-mode-hook
-          (lambda ()
-            (turn-off-auto-fill)
-            (set (make-local-variable 'electric-indent-functions)
-                 (list (lambda (arg) 'indent-relative)))))
 
 (global-set-key (kbd "<S-tab>") 'un-indent-by-removing-4-spaces)
 
