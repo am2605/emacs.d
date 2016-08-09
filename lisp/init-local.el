@@ -33,15 +33,15 @@
 
 (mmm-add-classes
  '((html-cfm
-    :submode js2-mode
+    :submode js-mode
     :front "<cfscript>"
     :back "[ \t]*</cfscript>")
    (cfc-script
-    :submode js2-mode
+    :submode js-mode
     :front "\\`\\(component\\|\\/\\*\\)"
     :back "\\'")
    (cfm-js
-    :submode js2-mode
+    :submode js-mode
     :front "<script[^>]*>[ \t]*\n?"
     :back "[ \t]*</script>")))
 
