@@ -27,18 +27,23 @@
 ;; Use mmm-mode for highlighting of cfscript blocks in cfml files
 (setq mmm-global-mode 'maybe)
 (mmm-add-mode-ext-class nil "\\.cfm\\'" 'html-cfm)
+(mmm-add-mode-ext-class nil "\\.cfm\\'" 'cfm-js)
 (mmm-add-mode-ext-class nil "\\.cfc\\'" 'html-cfm)
 (mmm-add-mode-ext-class nil "\\.cfc\\'" 'cfc-script)
 
 (mmm-add-classes
  '((html-cfm
-    :submode js-mode
+    :submode js2-mode
     :front "<cfscript>"
-    :back "</cfscript>")
+    :back "[ \t]*</cfscript>")
    (cfc-script
-    :submode js-mode
+    :submode js2-mode
     :front "\\`\\(component\\|\\/\\*\\)"
-    :back "\\'")))
+    :back "\\'")
+   (cfm-js
+    :submode js2-mode
+    :front "<script[^>]*>[ \t]*\n?"
+    :back "[ \t]*</script>")))
 
 (setq mmm-submode-decoration-level 0)
 
@@ -47,7 +52,7 @@
 (when *is-windows*
   (set-face-attribute 'default nil :font "Consolas 11"))
 
-(load-theme 'sanityinc-tomorrow-blue t)
+;; (load-theme 'sanityinc-solarized-dark t)
 
 (menu-bar-mode -1)
 
@@ -107,8 +112,6 @@
 ;; (require 'evil)
 ;; (evil-mode 1)
 
-(setq-default flycheck-disabled-checkers '(php))
-
 (global-set-key "\C-xf" 'recentf-open-files)
 (add-to-list 'recentf-exclude "\\.windows\\'")
 (add-to-list 'recentf-exclude "\\.revive\\'")
@@ -124,6 +127,6 @@
 (projectile-global-mode)
 (setq projectile-indexing-method 'alien)
 
-(setq flycheck-disabled-checkers '(sh-shellscript sh-bash sh-zsh sh-posix-bash))
+(setq flycheck-disabled-checkers '(php sh-shellscript sh-bash sh-zsh sh-posix-bash))
 
 (provide 'init-local)
