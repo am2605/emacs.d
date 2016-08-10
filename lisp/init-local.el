@@ -15,6 +15,8 @@
              '("\\.cfm\\'" . web-mode))
 (add-to-list 'auto-mode-alist
              '("\\.cfc\\'" . js2-mode))
+(add-to-list 'auto-mode-alist
+             '("\\.php\\'" . web-mode))
 
 ;; ensure default set of packages is installed
 (when (not package-archive-contents)
