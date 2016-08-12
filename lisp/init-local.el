@@ -24,7 +24,7 @@
   (package-refresh-contents))
 
 ;; Add in your own as you wish:
-(defvar my-packages '(evil groovy-mode projectile web-mode)
+(defvar my-packages '(scala-mode projectile web-mode)
   "A list of packages to ensure are installed at launch.")
 
 (dolist (p my-packages)
@@ -112,7 +112,9 @@
 
 (require 'projectile)
 (projectile-global-mode)
-(setq projectile-indexing-method 'alien)
+
+(when *is-windows*
+  (setq projectile-indexing-method 'alien))
 
 (setq flycheck-disabled-checkers '(php sh-shellscript sh-bash sh-zsh sh-posix-bash))
 
