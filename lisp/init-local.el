@@ -59,6 +59,8 @@
 (when *is-windows*
   (set-face-attribute 'default nil :font "Consolas 11"))
 
+(load-theme 'sanityinc-solarized-light t)
+
 (menu-bar-mode -1)
 
 (setq sgml-basic-offset 4)
@@ -117,5 +119,16 @@
   (setq projectile-indexing-method 'alien))
 
 (setq flycheck-disabled-checkers '(php sh-shellscript sh-bash sh-zsh sh-posix-bash))
+
+;; override the default keybindings in paredit
+
+(eval-after-load 'paredit
+  '(progn
+     (define-key paredit-mode-map (kbd "<M-right>") 'paredit-forward-slurp-sexp)
+     (define-key paredit-mode-map (kbd "<M-left>") 'paredit-forward-barf-sexp)
+     (define-key paredit-mode-map (kbd "<C-right>") nil)
+     (define-key paredit-mode-map (kbd "<C-left>") nil)))
+
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
 
 (provide 'init-local)
