@@ -24,7 +24,7 @@
   (package-refresh-contents))
 
 ;; Add in your own as you wish:
-(defvar my-packages '(scala-mode projectile web-mode)
+(defvar my-packages '(scala-mode projectile web-mode ensime sbt-mode spacemacs-theme theme-changer key-chord evil-mode)
   "A list of packages to ensure are installed at launch.")
 
 (dolist (p my-packages)
@@ -57,9 +57,7 @@
 (setq initial-scratch-message "")
 
 (when *is-windows*
-  (set-face-attribute 'default nil :font "Consolas 11"))
-
-(load-theme 'sanityinc-solarized-light t)
+  (set-face-attribute 'default nil :font "Source Code Pro 10"))
 
 (menu-bar-mode -1)
 
@@ -80,6 +78,7 @@
             (setq indent-line-function 'tab-to-tab-stop)
             (electric-indent-local-mode -1)
             ))
+
 
 (add-hook 'js-mode-hook
           (lambda ()
@@ -110,25 +109,38 @@
 (defun dark ()
   "Activate a dark color theme."
   (interactive)
-  (load-theme 'sanityinc-tomorrow-night t))
+  (load-theme 'spacemacs-dark t))
 
 (require 'projectile)
 (projectile-global-mode)
 
+(require 'server)
 (when *is-windows*
-  (setq projectile-indexing-method 'alien))
+  (setq projectile-indexing-method 'alien)
+  (unless (server-running-p)
+    (server-start))
+  )
 
 (setq flycheck-disabled-checkers '(php sh-shellscript sh-bash sh-zsh sh-posix-bash))
 
-;; override the default keybindings in paredit
+(setenv "SBT_OPTS" "-Djline.terminal=jline.UnsupportedTerminal")
 
-(eval-after-load 'paredit
-  '(progn
-     (define-key paredit-mode-map (kbd "<M-right>") 'paredit-forward-slurp-sexp)
-     (define-key paredit-mode-map (kbd "<M-left>") 'paredit-forward-barf-sexp)
-     (define-key paredit-mode-map (kbd "<C-right>") nil)
-     (define-key paredit-mode-map (kbd "<C-left>") nil)))
+(require 'linum)
+(add-hook 'web-mode-hook #'linum-on)
 
-(add-to-list 'default-frame-alist '(fullscreen . maximized))
+(require 'evil)
+(require 'key-chord)
+(evil-mode 1)
+;;Exit insert mode by pressing j and then j quickly
+(setq key-chord-two-keys-delay 0.5)
+(key-chord-define evil-insert-state-map "jj" 'evil-normal-state)
+(key-chord-mode 1)
+
+(setq calendar-location-name "Tamworth, NSW, Australia")
+(setq calendar-latitude -31.1)
+(setq calendar-longitude 150.93)
+
+(require 'theme-changer)
+(change-theme 'sanityinc-solarized-light 'spacemacs-dark)
 
 (provide 'init-local)
