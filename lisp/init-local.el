@@ -24,7 +24,7 @@
   (package-refresh-contents))
 
 ;; Add in your own as you wish:
-(defvar my-packages '(scala-mode projectile web-mode ensime sbt-mode spacemacs-theme theme-changer key-chord evil-mode)
+(defvar my-packages '(projectile web-mode spacemacs-theme theme-changer yasnippet)
   "A list of packages to ensure are installed at launch.")
 
 (dolist (p my-packages)
@@ -128,13 +128,18 @@
 (require 'linum)
 (add-hook 'web-mode-hook #'linum-on)
 
-(require 'evil)
-(require 'key-chord)
-(evil-mode 1)
+;;(require 'evil)
+;;(require 'key-chord)
+;;(evil-mode 1)
 ;;Exit insert mode by pressing j and then j quickly
-(setq key-chord-two-keys-delay 0.5)
-(key-chord-define evil-insert-state-map "jj" 'evil-normal-state)
-(key-chord-mode 1)
+;;(setq key-chord-two-keys-delay 0.5)
+;;(key-chord-define evil-insert-state-map "jj" 'evil-normal-state)
+;;(key-chord-mode 1)
+
+(require 'yasnippet)
+(setq yas-snippet-dirs
+      '("~/.emacs.d/snippets"))
+(yas-global-mode 1)
 
 (setq calendar-location-name "Tamworth, NSW, Australia")
 (setq calendar-latitude -31.1)
@@ -142,5 +147,12 @@
 
 (require 'theme-changer)
 (change-theme 'sanityinc-solarized-light 'spacemacs-dark)
+
+(setq backup-directory-alist
+      `((".*" . ,temporary-file-directory)))
+(setq auto-save-file-name-transforms
+      `((".*" ,temporary-file-directory t)))
+
+(setq create-lockfiles nil) ;; disable lock files because it screws up ioc.cfc
 
 (provide 'init-local)
