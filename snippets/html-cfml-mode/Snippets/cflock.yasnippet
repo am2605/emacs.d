@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# uuid: 4DD466D2-0B15-4E06-8446-5AFBFC8B4128
+# key: cflock
+# contributor: Translated from textmate snippet by yasmate.rb
+# name: cflock
+## condition: "text.html.cfm
+# --
+<cflock${1: timeout = "${2:30}" scope = "${3:session}" name = "${4:[ ]}"  throwOnTimeout = "${5:no}" type = "${6:exclusive}"}>
+	$7
+</cflock>$0
