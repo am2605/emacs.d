@@ -13,7 +13,7 @@
 (dolist (p my-packages)
   (when (not (package-installed-p p))
     (package-install p)))
-	
+
 (setq initial-scratch-message "")
 
 (add-to-list 'load-path "~/.emacs.d/local-packages/")
@@ -22,7 +22,7 @@
 (require 'mmm-auto)
 (setq mmm-global-mode 'auto)
 
-(setq mmm-submode-decoration-level 2
+(setq mmm-submode-decoration-level 0
       mmm-parse-when-idle t)
 
 (mmm-add-mode-ext-class 'html-cfml-mode "\\.cfm\\''" 'html-cfm)
@@ -81,6 +81,6 @@
 (setq calendar-longitude 150.93)
 
 (require 'theme-changer)
-(change-theme 'sanityinc-solarized-light 'sanityinc-solarized-dark)
+(change-theme 'sanityinc-solarized-light 'sanityinc-tomorrow-night)
 
 (provide 'init-local)
