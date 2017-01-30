@@ -34,6 +34,8 @@
 (add-to-list 'auto-mode-alist '("\\.cfm\\'" . cfml-mode))
 (add-to-list 'auto-mode-alist '("\\.cfc\\'"  . cfml-mode))
 
+(add-to-list 'auto-mode-alist '("\\.php\\'" . web-mode))
+
 (require 'js)
 ;; use spaces instead of tabs
 (setq js-indent-level 4)
