@@ -35,11 +35,11 @@
 ;; (setq mmm-global-mode 'auto)
 
 ;; (mmm-add-mode-ext-class 'html-cfml-mode "\\.cfm\\''" 'html-cfm)
-;; (mmm-add-mode-ext-class 'html-cfml-mode "\\.cfc\\'" 'html-cfm)
-;; (mmm-add-mode-ext-class 'html-cfml-mode "\\.cfc\\'" 'cfc-script)
+;; (mmm-add-mode-ext-class 'cfml-mode "\\.cfc\\'" 'html-cfm)
+;; (mmm-add-mode-ext-class 'cfml-mode "\\.cfc\\'" 'cfc-script)
 
-;; (add-to-list 'auto-mode-alist '("\\.cfm\\'" . html-cfml-mode))
-;; (add-to-list 'auto-mode-alist '("\\.cfc\\'"  . html-cfml-mode))
+;; (add-to-list 'auto-mode-alist '("\\.cfm\\'" . cfml-mode))
+;; (add-to-list 'auto-mode-alist '("\\.cfc\\'"  . cfml-mode))
 
 ;; Optional settings:
 
@@ -91,7 +91,7 @@
   (add-to-list 'mmm-save-local-variables 'js--quick-match-re-func))
 
 ;;;###autoload
-(define-derived-mode html-cfml-mode html-mode "CFML"
+(define-derived-mode cfml-mode html-mode "CFML"
   (setq tab-stop-list (number-sequence sgml-basic-offset 120 sgml-basic-offset))
   (local-set-key (kbd "RET") 'indent-to-previous)
   (local-set-key (kbd "S-<tab>") (lambda () (interactive) (unindent-by-removing-n-spaces sgml-basic-offset)))

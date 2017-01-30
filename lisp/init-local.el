@@ -22,15 +22,17 @@
 (require 'mmm-auto)
 (setq mmm-global-mode 'auto)
 
+(menu-bar-mode -1)
+
 (setq mmm-submode-decoration-level 0
       mmm-parse-when-idle t)
 
-(mmm-add-mode-ext-class 'html-cfml-mode "\\.cfm\\''" 'html-cfm)
-(mmm-add-mode-ext-class 'html-cfml-mode "\\.cfc\\'" 'html-cfm)
-(mmm-add-mode-ext-class 'html-cfml-mode "\\.cfc\\'" 'cfc-script)
+(mmm-add-mode-ext-class 'cfml-mode "\\.cfm\\''" 'html-cfm)
+(mmm-add-mode-ext-class 'cfml-mode "\\.cfc\\'" 'html-cfm)
+(mmm-add-mode-ext-class 'cfml-mode "\\.cfc\\'" 'cfc-script)
 
-(add-to-list 'auto-mode-alist '("\\.cfm\\'" . html-cfml-mode))
-(add-to-list 'auto-mode-alist '("\\.cfc\\'"  . html-cfml-mode))
+(add-to-list 'auto-mode-alist '("\\.cfm\\'" . cfml-mode))
+(add-to-list 'auto-mode-alist '("\\.cfc\\'"  . cfml-mode))
 
 (require 'js)
 ;; use spaces instead of tabs
@@ -59,12 +61,10 @@
 (global-set-key (kbd "C-c u") 'my-unindent-region)
 
 (when *is-windows*
+  (setq projectile-indexing-method 'alien)
   (set-face-attribute 'default nil :font "Source Code Pro 10"))
-
-;;(menu-bar-mode -1)
-
-(when *is-windows*
-  (setq projectile-indexing-method 'alien))
+(when *is-a-mac*
+  (set-default-font "Monaco 14"))
 
 (setq flycheck-disabled-checkers '(php sh-shellscript sh-bash sh-zsh sh-posix-bash))
 
@@ -82,5 +82,7 @@
 
 (require 'theme-changer)
 (change-theme 'sanityinc-solarized-light 'sanityinc-tomorrow-night)
+
+(desktop-save-mode 0)
 
 (provide 'init-local)
