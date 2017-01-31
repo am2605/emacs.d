@@ -49,9 +49,6 @@
 ;;; Code:
 
 (require 'sgml-mode)
-(eval-when-compile (require 'cl))
-(require 'mmm-vars)
-(require 'mmm-region)
 
 (mmm-add-classes
  '((html-cfm
@@ -68,7 +65,7 @@
   (interactive)
   (newline)
   (unless (looking-back "\\`\n*")
-  (indent-relative-maybe)))
+    (indent-relative-maybe)))
 
 (defun unindent-by-removing-n-spaces (n)
   "remove n spaces from beginning of of line"
@@ -84,12 +81,12 @@
 
 ;;;###autoload
 (define-derived-mode cfscript-mode js-mode "cfscript"
-  (setq indent-line-function 'indent-relative)
-  (local-set-key (kbd "RET") 'newline-and-indent)
+  (local-set-key (kbd "RET") 'indent-to-previous)
   (local-set-key (kbd "S-<tab>") (lambda () (interactive) (unindent-by-removing-n-spaces sgml-basic-offset)))
+  (setq indent-line-function 'tab-to-tab-stop)
+  (electric-indent-local-mode -1)
   (add-to-list 'mmm-save-local-variables 'js--quick-match-re)
   (add-to-list 'mmm-save-local-variables 'js--quick-match-re-func))
-
 ;;;###autoload
 (define-derived-mode cfml-mode html-mode "CFML"
   (setq tab-stop-list (number-sequence sgml-basic-offset 120 sgml-basic-offset))

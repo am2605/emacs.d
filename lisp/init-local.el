@@ -18,21 +18,34 @@
 
 (add-to-list 'load-path "~/.emacs.d/local-packages/")
 
-(require 'mmm-cfml)
-(require 'mmm-auto)
-(setq mmm-global-mode 'auto)
+;;(require 'mmm-auto)
+;;(setq mmm-global-mode 'auto)
 
 (menu-bar-mode -1)
 
-(setq mmm-submode-decoration-level 0
-      mmm-parse-when-idle t)
+;; (setq mmm-submode-decoration-level 0
+;; mmm-parse-when-idle t)
 
-(mmm-add-mode-ext-class 'cfml-mode "\\.cfm\\''" 'html-cfm)
-(mmm-add-mode-ext-class 'cfml-mode "\\.cfc\\'" 'html-cfm)
-(mmm-add-mode-ext-class 'cfml-mode "\\.cfc\\'" 'cfc-script)
+;; (mmm-add-mode-ext-class 'cfml-mode "\\.cfm\\''" 'html-cfm)
+;; (mmm-add-mode-ext-class 'cfml-mode "\\.cfc\\'" 'html-cfm)
+;; (mmm-add-mode-ext-class 'cfml-mode "\\.cfc\\'" 'cfc-script)
 
-(add-to-list 'auto-mode-alist '("\\.cfm\\'" . cfml-mode))
-(add-to-list 'auto-mode-alist '("\\.cfc\\'"  . cfml-mode))
+;; (add-to-list 'auto-mode-alist '("\\.cfm\\'" . cfml-mode))
+;; (add-to-list 'auto-mode-alist '("\\.cfc\\'"  . cfml-mode))
+
+(require 'mmm-mode)
+(require 'mmm-cfml)
+;; choose modes for CFML automatically
+(add-to-list 'auto-mode-alist
+             '("\\.cfm\\'" . cfml-mode))
+(add-to-list 'auto-mode-alist
+             '("\\.cfc\\'" . cfml-mode))
+
+;; Use mmm-mode for highlighting of cfscript blocks in cfml files
+(setq mmm-global-mode 'maybe)
+(mmm-add-mode-ext-class nil "\\.cfm\\'" 'html-cfm)
+(mmm-add-mode-ext-class nil "\\.cfm\\'" 'cfc-script)
+(mmm-add-mode-ext-class nil "\\.cfc\\'" 'html-cfm)
 
 (add-to-list 'auto-mode-alist '("\\.php\\'" . web-mode))
 
