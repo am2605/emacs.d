@@ -93,6 +93,10 @@
   (local-set-key (kbd "RET") 'indent-to-previous)
   (local-set-key (kbd "S-<tab>") (lambda () (interactive) (unindent-by-removing-n-spaces sgml-basic-offset)))
   (setq indent-line-function 'tab-to-tab-stop)
+  (setq comment-start "<!---")
+  (setq comment-end " --->")
+  (setq-local comment-start-skip "<!---[ \t]*")
+  (setq-local comment-end-skip "[ \t]*---[ \t\n]*>")
   (electric-indent-local-mode -1))
 
 (provide 'mmm-cfml)
