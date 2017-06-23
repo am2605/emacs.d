@@ -7,7 +7,7 @@
   (package-refresh-contents))
 
 ;; Add in your own as you wish:
-(defvar my-packages '(projectile theme-changer web-mode yasnippet)
+(defvar my-packages '(github-theme projectile theme-changer web-mode yasnippet)
   "A list of packages to ensure are installed at launch.")
 
 (dolist (p my-packages)
@@ -23,29 +23,27 @@
 
 (menu-bar-mode -1)
 
-;; (setq mmm-submode-decoration-level 0
-;; mmm-parse-when-idle t)
-
-;; (mmm-add-mode-ext-class 'cfml-mode "\\.cfm\\''" 'html-cfm)
-;; (mmm-add-mode-ext-class 'cfml-mode "\\.cfc\\'" 'html-cfm)
-;; (mmm-add-mode-ext-class 'cfml-mode "\\.cfc\\'" 'cfc-script)
-
-;; (add-to-list 'auto-mode-alist '("\\.cfm\\'" . cfml-mode))
-;; (add-to-list 'auto-mode-alist '("\\.cfc\\'"  . cfml-mode))
-
 (require 'mmm-mode)
 (require 'mmm-cfml)
+
 ;; choose modes for CFML automatically
+(add-to-list 'magic-mode-alist
+             '("<cfcomponent" . cfml-mode))
+(add-to-list 'magic-mode-alist
+             '("<!---" . cfml-mode))
 (add-to-list 'auto-mode-alist
              '("\\.cfm\\'" . cfml-mode))
 (add-to-list 'auto-mode-alist
-             '("\\.cfc\\'" . cfml-mode))
+             '("\\.cfc\\'" . cfscript-mode))
 
 ;; Use mmm-mode for highlighting of cfscript blocks in cfml files
 (setq mmm-global-mode 'maybe)
 (mmm-add-mode-ext-class nil "\\.cfm\\'" 'html-cfm)
-(mmm-add-mode-ext-class nil "\\.cfm\\'" 'cfc-script)
+;;(mmm-add-mode-ext-class nil "\\.cfm\\'" 'cfscript-mode)
 (mmm-add-mode-ext-class nil "\\.cfc\\'" 'html-cfm)
+;;(mmm-add-mode-ext-class nil "\\.cfc\\'" 'cfscript-mode)
+
+(setq mmm-submode-decoration-level 0)
 
 (add-to-list 'auto-mode-alist '("\\.php\\'" . web-mode))
 
@@ -96,8 +94,16 @@
 (setq calendar-longitude 150.93)
 
 (require 'theme-changer)
-(change-theme 'sanityinc-solarized-light 'sanityinc-tomorrow-night)
+(change-theme 'sanityinc-solarized-light 'sanityinc-solarized-dark)
 
 (desktop-save-mode 0)
+
+;; makes autocomplete suggestions case sensitive
+(setq company-dabbrev-downcase nil)
+
+(setq backup-directory-alist
+      `((".*" . ,temporary-file-directory)))
+(setq auto-save-file-name-transforms
+      `((".*" ,temporary-file-directory t)))
 
 (provide 'init-local)

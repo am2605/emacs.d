@@ -54,11 +54,7 @@
  '((html-cfm
     :submode cfscript-mode
     :front "<cfscript>"
-    :back "[ \t]*</cfscript>")
-   (cfc-script
-    :submode cfscript-mode
-    :front "\\`\\(component\\|\\/\\*\\)"
-    :back "\\'")))
+    :back "[ \t]*</cfscript>")))
 
 (defun indent-to-previous ()
   "Inserts a newline character then indents the new line just like the previous line"
