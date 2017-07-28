@@ -107,3 +107,5 @@
       `((".*" ,temporary-file-directory t)))
 
 (provide 'init-local)
+
+(server-start)
