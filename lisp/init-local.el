@@ -24,7 +24,7 @@
 (menu-bar-mode -1)
 
 (require 'mmm-mode)
-(require 'mmm-cfml)
+(require 'cfml-mode)
 
 ;; choose modes for CFML automatically
 (add-to-list 'magic-mode-alist
@@ -39,9 +39,7 @@
 ;; Use mmm-mode for highlighting of cfscript blocks in cfml files
 (setq mmm-global-mode 'maybe)
 (mmm-add-mode-ext-class nil "\\.cfm\\'" 'html-cfm)
-;;(mmm-add-mode-ext-class nil "\\.cfm\\'" 'cfscript-mode)
 (mmm-add-mode-ext-class nil "\\.cfc\\'" 'html-cfm)
-;;(mmm-add-mode-ext-class nil "\\.cfc\\'" 'cfscript-mode)
 
 (setq mmm-submode-decoration-level 0)
 
