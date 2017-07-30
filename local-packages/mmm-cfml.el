@@ -63,23 +63,12 @@
   (unless (looking-back "\\`\n*")
     (indent-relative-maybe)))
 
-(defun unindent-by-removing-n-spaces (n)
-  "remove n spaces from beginning of of line"
-  (interactive)
-  (save-excursion
-    (save-match-data
-      (beginning-of-line)
-      ;; get rid of tabs at beginning of line
-      (when (looking-at "^\\s-+")
-        (untabify (match-beginning 0) (match-end 0)))
-      (when (looking-at (concat "^" (make-string n ?\s)))
-        (replace-match "")))))
-
 ;;;###autoload
 (define-derived-mode cfscript-mode js-mode "cfscript"
   (local-set-key (kbd "RET") 'indent-to-previous)
   (local-set-key (kbd "S-<tab>") (lambda () (interactive) (unindent-by-removing-n-spaces sgml-basic-offset)))
-  (setq indent-line-function 'tab-to-tab-stop)
+  ;; (setq indent-line-function 'tab-to-tab-stop)
+  ;;(setq indent-line-function 'sgml-indent-line)
   (electric-indent-local-mode -1)
   (add-to-list 'mmm-save-local-variables 'js--quick-match-re)
   (add-to-list 'mmm-save-local-variables 'js--quick-match-re-func))
@@ -87,8 +76,9 @@
 (define-derived-mode cfml-mode html-mode "CFML"
   (setq tab-stop-list (number-sequence sgml-basic-offset 120 sgml-basic-offset))
   (local-set-key (kbd "RET") 'indent-to-previous)
-  (local-set-key (kbd "S-<tab>") (lambda () (interactive) (unindent-by-removing-n-spaces sgml-basic-offset)))
-  (setq indent-line-function 'tab-to-tab-stop)
+  ;;  (local-set-key (kbd "S-<tab>") (lambda () (interactive) (unindent-by-removing-n-spaces sgml-basic-offset)))
+  ;; (setq indent-line-function 'tab-to-tab-stop)
+  (setq indent-line-function 'sgml-indent-line)
   (setq comment-start "<!---")
   (setq comment-end " --->")
   (setq-local comment-start-skip "<!---[ \t]*")

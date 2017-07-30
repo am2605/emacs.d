@@ -50,28 +50,28 @@
 (require 'js)
 ;; use spaces instead of tabs
 (setq js-indent-level 4)
-(setq indent-tabs-mode nil)
+;; (setq indent-tabs-mode nil)
 (setq js-auto-indent-flag 1)
 (setq sgml-basic-offset 4)
 
 ;; Set C-c i and C-c u to indent and outdent the selected region by 4 chars
-(defun my-indent-region (N)
+;; (defun my-indent-region (N)
 
-  (interactive "p")
-  (if (use-region-p)
-      (progn (indent-rigidly (region-beginning) (region-end) (* N 4))
-             (deactivate-mark))
-    (self-insert-command N)))
+;;   (interactive "p")
+;;   (if (use-region-p)
+;;       (progn (indent-rigidly (region-beginning) (region-end) (* N 4))
+;;              (deactivate-mark))
+;;     (self-insert-command N)))
 
-(defun my-unindent-region (N)
-  (interactive "p")
-  (if (use-region-p)
-      (progn (indent-rigidly (region-beginning) (region-end) (* N -4))
-             (deactivate-mark))
-    (self-insert-command N)))
+;; (defun my-unindent-region (N)
+;;   (interactive "p")
+;;   (if (use-region-p)
+;;       (progn (indent-rigidly (region-beginning) (region-end) (* N -4))
+;;              (deactivate-mark))
+;;     (self-insert-command N)))
 
-(global-set-key (kbd "C-c i") 'my-indent-region)
-(global-set-key (kbd "C-c u") 'my-unindent-region)
+;; (global-set-key (kbd "C-c i") 'my-indent-region)
+;; (global-set-key (kbd "C-c u") 'my-unindent-region)
 
 (when *is-windows*
   (setq projectile-indexing-method 'alien)
