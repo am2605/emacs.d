@@ -24,7 +24,7 @@
 (menu-bar-mode -1)
 
 (require 'mmm-mode)
-(require 'cfml-mode)
+(require 'mmm-cfml)
 
 ;; choose modes for CFML automatically
 (add-to-list 'magic-mode-alist
