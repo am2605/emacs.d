@@ -5,4 +5,4 @@
 # name: cfdump
 ## condition: "text.html.cfm
 # --
-<cfdump${1: var = "${2:#variable#}" expand = "${3:[ ]}" label = "${4:[ ]}" top = "${5:[ ]}"}>$0
+<cfdump var="#$1#"${2: abort="${3:false}"}>$0
