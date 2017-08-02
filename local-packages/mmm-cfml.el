@@ -66,8 +66,8 @@
 ;;;###autoload
 (define-derived-mode cfscript-mode js-mode "cfscript"
   (local-set-key (kbd "RET") 'indent-to-previous)
-  (local-set-key (kbd "S-<tab>") (lambda () (interactive) (unindent-by-removing-n-spaces sgml-basic-offset)))
-  ;; (setq indent-line-function 'tab-to-tab-stop)
+  ;; (local-set-key (kbd "S-<tab>")
+  ;;                (lambda () (interactive) (unindent-by-removing-n-spaces sgml-basic-offset)))
   ;;(setq indent-line-function 'sgml-indent-line)
   (electric-indent-local-mode -1)
   (add-to-list 'mmm-save-local-variables 'js--quick-match-re)
@@ -75,7 +75,7 @@
 ;;;###autoload
 (define-derived-mode cftag-mode cfml-mode "CFML"
   (setq tab-stop-list (number-sequence sgml-basic-offset 120 sgml-basic-offset))
-  (local-set-key (kbd "RET") 'indent-to-previous)
+  ;; (local-set-key (kbd "RET") 'indent-to-previous)
   ;;  (local-set-key (kbd "S-<tab>") (lambda () (interactive) (unindent-by-removing-n-spaces sgml-basic-offset)))
   ;; (setq indent-line-function 'tab-to-tab-stop)
   (setq indent-line-function 'sgml-indent-line)
