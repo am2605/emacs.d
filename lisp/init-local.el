@@ -14,8 +14,9 @@
   (when (not (package-installed-p p))
     (package-install p)))
 
-(add-to-list 'load-path "~/.emacs.d/site-lisp/")	
-	
+;;(add-to-list 'load-path "~/.emacs.d/site-lisp/")
+;;(add-to-list 'load-path "D:/AMyers/dev/cfml-mode")
+
 (setq initial-scratch-message "")
 
 (menu-bar-mode -1)
@@ -39,19 +40,24 @@
 (setq mmm-submode-decoration-level 0)
 
 ;; Indenting
-(require 'js)
-(setq js-indent-level 4)
-(setq js-auto-indent-flag 1)
-(setq sgml-basic-offset 4)
-(setq tab-width 4)
+;; (require 'js)
+;; (setq js-indent-level 4)
+;; (setq js-auto-indent-flag 1)
+;; (setq sgml-basic-offset 4)
+;; (setq tab-width 4)
 
-;;(setq-default indent-tabs-mode nil)
-;;(setq c-basic-indent 4)
+;; (setq-default indent-tabs-mode nil)
+;; (setq c-basic-offset 4)
+
+;; (setq-default indent-tabs-mode t)
+;; (setq-default tab-width 4) ; Assuming you want your tabs to be four spaces wide
+;; (defvaralias 'c-basic-offset 'tab-width)
 
 (when *is-windows*
   (setq projectile-indexing-method 'alien)
   (set-face-attribute 'default nil :font "Source Code Pro 10")
-  (setq-default cursor-type 'bar))
+  ;;  (setq-default cursor-type 'bar)
+  )
 (when *is-a-mac*
   (set-default-font "Monaco 14"))
 
