@@ -7,7 +7,7 @@
   (package-refresh-contents))
 
 ;; Add in your own as you wish:
-(defvar my-packages '(github-theme projectile theme-changer web-mode yasnippet)
+(defvar my-packages '(cfml-mode github-theme neotree projectile spacemacs-theme theme-changer web-mode yasnippet)
   "A list of packages to ensure are installed at launch.")
 
 (dolist (p my-packages)
@@ -36,27 +36,23 @@
 (setq mmm-global-mode 'maybe)
 (mmm-add-mode-ext-class nil "\\.cfm\\'" 'cfml-cftag)
 (mmm-add-mode-ext-class nil "\\.cfc\\'" 'cfml-cftag)
-
+(mmm-add-mode-ext-class nil "\\.cfm\\'" 'cfml-js)
 (setq mmm-submode-decoration-level 0)
 
 ;; Indenting
-;; (require 'js)
-;; (setq js-indent-level 4)
-;; (setq js-auto-indent-flag 1)
-;; (setq sgml-basic-offset 4)
-;; (setq tab-width 4)
-
-;; (setq-default indent-tabs-mode nil)
-;; (setq c-basic-offset 4)
-
-;; (setq-default indent-tabs-mode t)
-;; (setq-default tab-width 4) ; Assuming you want your tabs to be four spaces wide
-;; (defvaralias 'c-basic-offset 'tab-width)
+(require 'js)
+(setq js-indent-level 4)
+(setq js-auto-indent-flag 1)
+(setq sgml-basic-offset 4)
+(setq tab-width 4)
+(setq-default indent-tabs-mode nil)
+(setq c-basic-offset 4)
 
 (when *is-windows*
   (setq projectile-indexing-method 'alien)
-  (set-face-attribute 'default nil :font "Source Code Pro 10")
-  ;;  (setq-default cursor-type 'bar)
+  (set-face-attribute 'default nil :font "Consolas 11")
+  ;;  (setq explicit-shell-file-name "C:/Program Files/Git/usr/bin/sh.exe")
+  ;;  (setq explicit-bash.exe-args '("--noediting" "--login" "-i"))
   )
 (when *is-a-mac*
   (set-default-font "Monaco 14"))
@@ -92,6 +88,32 @@
 (require 'ivy)
 (define-key ivy-minibuffer-map (kbd "<up>") #'ivy-previous-line)
 
-(provide 'init-local)
+(require 'neotree)
+(global-set-key [f8] 'neotree-toggle)
+(setq projectile-switch-project-action 'neotree-projectile-action)
 
+(global-set-key (kbd "C-z") 'toggle-viper-mode)
+(setq viper-vi-style-in-minibuffer nil)
+(setq viper-minibuffer-emacs-face nil)
+
+;; (setq-default cursor-type 'bar)
+
+;; (require 'god-mode)
+;; (global-set-key (kbd "<escape>") 'god-mode-all)
+;; (defun my-update-cursor ()
+;;   (setq cursor-type (if (or god-local-mode buffer-read-only)
+;;                         'box
+;;                       'bar)))
+
+;; (add-hook 'god-mode-enabled-hook 'my-update-cursor)
+;; (add-hook 'god-mode-disabled-hook 'my-update-cursor)
+
+;; (define-key god-local-mode-map (kbd "i") 'god-local-mode)
+
+;; (global-set-key (kbd "C-x C-1") 'delete-other-windows)
+;; (global-set-key (kbd "C-x C-2") 'split-window-below)
+;; (global-set-key (kbd "C-x C-3") 'split-window-right)
+;; (global-set-key (kbd "C-x C-0") 'delete-window)
+
+(provide 'init-local)
 (server-start)
