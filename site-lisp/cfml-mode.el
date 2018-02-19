@@ -32,34 +32,18 @@
 
 ;;; Code:
 
-(setq cfml-tagnames
-      '("cfargument"
-        "cfcatch"
-        "cfcomponent"
-        "cfelse"
-        "cfelseif"
-        "cffunction"
-        "cfif"
-        "cfinclude"
-        "cflock"
-        "cflog"
-        "cfoutput"
-        "cfparam"
-        "cfquery"
-        "cfreturn"
-        "cfsavecontent"
-        "cfset"
-        "cfsetting"
-        "cfscript"
-        "cftry"))
+(require 'sgml-mode)
+(require 'cfscript-mode)
 
-
-(setq cfml-tagnames-regexp (regexp-opt cfml-tagnames 'words))
-
-;; (setq cfml-font-lock-keywords
-;;       `(
-;;         (,cfml-tagnames-regexp . font-lock-keyword-face)
-;;         ))
+(mmm-add-classes
+ '((cfml-cfscript
+    :submode cfscript-mode
+    :front "<cfscript>"
+    :back "[ \t]*</cfscript>")
+   (cfml-js
+    :submode js-mode
+    :front "<script[^>]*>[ \t]*\n?"
+    :back "[ \t]*</script>")))
 
 (defun cfml-indent-to-previous ()
   "Insert a newline character then indent the new line just like the previous line."
@@ -68,26 +52,15 @@
   (unless (looking-back "\\`\n*")
     (indent-relative-maybe)))
 
-(defconst cfml-name-regexp "[_:[:alpha:]][-_.:[:alnum:]]*")
+;;;###autoload
 
-(defconst cfml-font-lock-keywords
-  `(
-    ;; Tag names.
-    (,(concat "</?\\(" cfml-name-regexp "\\)")
-     1 font-lock-function-name-face)
-    ;; Attributes: name=val, #id or .class.
-    (,(concat "\\(?:^\\|[ \t]\\)\\(?:\\("
-              cfml-name-regexp "\\)=\\([^@#^ \r\n]*\\)\\|<?\\([.#]"
-              cfml-name-regexp "\\)\\)")
-     (1 font-lock-variable-name-face nil t) ; Attribute names
-     (2 font-lock-string-face nil t) ; Attribute values
-     (3 font-lock-variable-name-face nil t)) ; #id and .class
-    )
+(define-derived-mode cfml-mode html-mode "CFML"
+  (setq sgml-unclosed-tags nil) ; Simplifies indentation logic
+  (setq tab-stop-list (number-sequence sgml-basic-offset 120 sgml-basic-offset))
+  (local-set-key (kbd "RET") 'cfml-indent-to-previous)
+  (electric-indent-local-mode -1)
   )
 
-;;;###autoload
-(define-derived-mode cfml-mode fundamental-mode "CFML"
-  (setq font-lock-defaults '((cfml-font-lock-keywords))))
 
 (provide 'cfml-mode)
 

@@ -20,9 +20,19 @@
 
 (menu-bar-mode -1)
 
+(require 'mmm-mode)
 (require 'cfml-mode)
 (require 'cfscript-mode)
 
+(setq mmm-global-mode 'auto)
+(mmm-add-mode-ext-class nil "\\.cfm\\'" 'cfml-js)
+(mmm-add-mode-ext-class nil "\\.cfm\\'" 'cfml-cfscript)
+(mmm-add-mode-ext-class nil "\\.cfc\\'" 'cfml-cfscript)
+
+(add-to-list 'magic-mode-alist
+             '("<cfcomponent" . cfml-mode))
+(add-to-list 'magic-mode-alist
+             '("<!---" . cfml-mode))
 (add-to-list 'auto-mode-alist
              '("\\.cfm\\'" . cfml-mode))
 (add-to-list 'auto-mode-alist
@@ -60,7 +70,7 @@
 (setq calendar-longitude 150.93)
 
 (require 'theme-changer)
-(change-theme 'sanityinc-tomorrow-day 'zenburn)
+(change-theme 'sanityinc-tomorrow-day 'sanityinc-solarized-dark)
 
 (desktop-save-mode 0)
 
@@ -88,19 +98,15 @@
 
 (ryo-modal-key "0" #'move-beginning-of-line)
 (ryo-modal-key "$" #'move-end-of-line)
+(ryo-modal-key "SPC b b" #'ivy-switch-buffer)
+(ryo-modal-key "SPC f s" #'save-buffer)
 (ryo-modal-key "SPC p f" #'projectile-find-file :exit t)
 (ryo-modal-key "SPC p p" #'projectile-switch-project :exit t)
-
-(ryo-modal-key
- "SPC" '(
-         ("q" save-buffers-kill-terminal)
-         ("s" save-buffer)
-         ("b" ivy-switch-buffer)))
+;; (ryo-modal-key "SPC q q" #'save-buffers-kill-terminal)
 
 (ryo-modal-key
  "d" '(
        ("d" kill-whole-line)))
-
 
 ;; (require 'neotree)
 ;; (global-set-key [f8] 'neotree-toggle)

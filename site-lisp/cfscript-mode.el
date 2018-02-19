@@ -37,27 +37,14 @@
   (unless (looking-back "\\`\n*")
     (indent-relative-maybe)))
 
-(setq cfscript-keywords
-      '("function"
-        "var"
-        "public"
-        "return"))
-
-
-(setq cfscript-keywords-regexp (regexp-opt cfscript-keywords 'words))
-
-(setq cfscript-font-lock-keywords
-      `(
-        (,cfscript-keywords-regexp . font-lock-keyword-face)
-        ))
-
-
 ;;;###autoload
-(define-derived-mode cfscript-mode prog-mode "cfscript"
+(define-derived-mode cfscript-mode js-mode "cfscript"
   (setq tab-stop-list (number-sequence c-basic-offset 120 c-basic-offset))
-  (setq font-lock-defaults '((cfscript-font-lock-keywords)))
   (local-set-key (kbd "RET") 'cfscript-indent-to-previous)
   (electric-indent-local-mode -1))
+
+(font-lock-add-keywords 'cfscript-mode
+                        '(("\\<component\\>" 0 'font-lock-keyword-face prepend)))
 
 (provide 'cfscript-mode)
 
