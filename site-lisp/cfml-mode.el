@@ -56,10 +56,10 @@
 
 (setq cfml-tagnames-regexp (regexp-opt cfml-tagnames 'words))
 
-(setq cfml-font-lock-keywords
-      `(
-        (,cfml-tagnames-regexp . font-lock-keyword-face)
-        ))
+;; (setq cfml-font-lock-keywords
+;;       `(
+;;         (,cfml-tagnames-regexp . font-lock-keyword-face)
+;;         ))
 
 (defun cfml-indent-to-previous ()
   "Insert a newline character then indent the new line just like the previous line."
@@ -67,6 +67,23 @@
   (newline)
   (unless (looking-back "\\`\n*")
     (indent-relative-maybe)))
+
+(defconst cfml-name-regexp "[_:[:alpha:]][-_.:[:alnum:]]*")
+
+(defconst cfml-font-lock-keywords
+  `(
+    ;; Tag names.
+    (,(concat "</?\\(" cfml-name-regexp "\\)")
+     1 font-lock-function-name-face)
+    ;; Attributes: name=val, #id or .class.
+    (,(concat "\\(?:^\\|[ \t]\\)\\(?:\\("
+              cfml-name-regexp "\\)=\\([^@#^ \r\n]*\\)\\|<?\\([.#]"
+              cfml-name-regexp "\\)\\)")
+     (1 font-lock-variable-name-face nil t) ; Attribute names
+     (2 font-lock-string-face nil t) ; Attribute values
+     (3 font-lock-variable-name-face nil t)) ; #id and .class
+    )
+  )
 
 ;;;###autoload
 (define-derived-mode cfml-mode fundamental-mode "CFML"
