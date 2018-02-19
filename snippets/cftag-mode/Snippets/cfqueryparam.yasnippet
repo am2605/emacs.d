@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# uuid: BC022681-5DE4-4E5C-8638-93EF655F7B0D
+# key: cfqueryparam
+# contributor: Translated from textmate snippet by yasmate.rb
+# name: cfqueryparam
+## condition: "text.html.cfm
+# --
+<cfqueryparam cfsqltype="cf_sql_${1:$$(yas-choose-value '("clob" "date" "integer" "numeric" "timestamp" "varchar"))}" value="$2">$0

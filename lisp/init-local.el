@@ -7,37 +7,26 @@
   (package-refresh-contents))
 
 ;; Add in your own as you wish:
-(defvar my-packages '(cfml-mode github-theme neotree projectile spacemacs-theme theme-changer web-mode yasnippet)
+(defvar my-packages '(projectile theme-changer web-mode yasnippet)
   "A list of packages to ensure are installed at launch.")
 
 (dolist (p my-packages)
   (when (not (package-installed-p p))
     (package-install p)))
 
-;;(add-to-list 'load-path "~/.emacs.d/site-lisp/")
-;;(add-to-list 'load-path "D:/AMyers/dev/cfml-mode")
-
+(add-to-list 'load-path "d:/AMyers/emacs_home/.emacs.d/site-lisp/")
+;;(load "mhtml-mode")
 (setq initial-scratch-message "")
 
 (menu-bar-mode -1)
 
-(require 'mmm-mode)
 (require 'cfml-mode)
+(require 'cfscript-mode)
 
-(add-to-list 'magic-mode-alist
-             '("<cfcomponent" . cftag-mode))
-(add-to-list 'magic-mode-alist
-             '("<!---" . cftag-mode))
 (add-to-list 'auto-mode-alist
-             '("\\.cfm\\'" . cftag-mode))
+             '("\\.cfm\\'" . cfml-mode))
 (add-to-list 'auto-mode-alist
-             '("\\.cfc\\'" . cfml-cfscript-mode))
-
-(setq mmm-global-mode 'maybe)
-(mmm-add-mode-ext-class nil "\\.cfm\\'" 'cfml-cftag)
-(mmm-add-mode-ext-class nil "\\.cfc\\'" 'cfml-cftag)
-(mmm-add-mode-ext-class nil "\\.cfm\\'" 'cfml-js)
-(setq mmm-submode-decoration-level 0)
+             '("\\.cfc\\'" . cfscript-mode))
 
 ;; Indenting
 (require 'js)
@@ -51,8 +40,6 @@
 (when *is-windows*
   (setq projectile-indexing-method 'alien)
   (set-face-attribute 'default nil :font "Consolas 11")
-  ;;  (setq explicit-shell-file-name "C:/Program Files/Git/usr/bin/sh.exe")
-  ;;  (setq explicit-bash.exe-args '("--noediting" "--login" "-i"))
   )
 (when *is-a-mac*
   (set-default-font "Monaco 14"))
@@ -62,10 +49,10 @@
 (require 'linum)
 (add-hook 'web-mode-hook #'linum-on)
 
-(require 'yasnippet)
-(setq yas-snippet-dirs
-      '("~/.emacs.d/snippets"))
-(yas-global-mode 1)
+;; (require 'yasnippet)
+;; (setq yas-snippet-dirs
+;;       '("~/.emacs.d/snippets"))
+;; (yas-global-mode 1)
 
 ;; Theming
 (setq calendar-location-name "Tamworth, NSW, Australia")
@@ -73,7 +60,7 @@
 (setq calendar-longitude 150.93)
 
 (require 'theme-changer)
-(change-theme 'sanityinc-solarized-light 'sanityinc-solarized-dark)
+(change-theme 'sanityinc-tomorrow-day 'zenburn)
 
 (desktop-save-mode 0)
 
@@ -88,32 +75,52 @@
 (require 'ivy)
 (define-key ivy-minibuffer-map (kbd "<up>") #'ivy-previous-line)
 
-(require 'neotree)
-(global-set-key [f8] 'neotree-toggle)
-(setq projectile-switch-project-action 'neotree-projectile-action)
+(require 'ryo-modal)
 
-(global-set-key (kbd "C-z") 'toggle-viper-mode)
-(setq viper-vi-style-in-minibuffer nil)
-(setq viper-minibuffer-emacs-face nil)
+(global-set-key (kbd "<escape>") 'ryo-modal-mode)
 
-;; (setq-default cursor-type 'bar)
+(ryo-modal-keys
+ ("i" ryo-modal-mode)
+ ("h" backward-char)
+ ("j" next-line)
+ ("k" previous-line)
+ ("l" forward-char))
 
-;; (require 'god-mode)
-;; (global-set-key (kbd "<escape>") 'god-mode-all)
-;; (defun my-update-cursor ()
-;;   (setq cursor-type (if (or god-local-mode buffer-read-only)
-;;                         'box
-;;                       'bar)))
+(ryo-modal-key "0" #'move-beginning-of-line)
+(ryo-modal-key "$" #'move-end-of-line)
+(ryo-modal-key "SPC p f" #'projectile-find-file :exit t)
+(ryo-modal-key "SPC p p" #'projectile-switch-project :exit t)
 
-;; (add-hook 'god-mode-enabled-hook 'my-update-cursor)
-;; (add-hook 'god-mode-disabled-hook 'my-update-cursor)
+(ryo-modal-key
+ "SPC" '(
+         ("q" save-buffers-kill-terminal)
+         ("s" save-buffer)
+         ("b" ivy-switch-buffer)))
 
-;; (define-key god-local-mode-map (kbd "i") 'god-local-mode)
+(ryo-modal-key
+ "d" '(
+       ("d" kill-whole-line)))
 
-;; (global-set-key (kbd "C-x C-1") 'delete-other-windows)
-;; (global-set-key (kbd "C-x C-2") 'split-window-below)
-;; (global-set-key (kbd "C-x C-3") 'split-window-right)
-;; (global-set-key (kbd "C-x C-0") 'delete-window)
+
+;; (require 'neotree)
+;; (global-set-key [f8] 'neotree-toggle)
+;; (global-set-key (kbd "C-x o") 'other-window)
+;; (setq projectile-switch-project-action 'neotree-projectile-action)
+
+;; et ne inducas nos in temptationem
+;; (require 'evil)
+;; (global-evil-leader-mode)
+;; (evil-leader/set-leader "<SPC>")
+;; (evil-leader/set-key
+;;   "b" 'switch-to-buffer
+;;   "k" 'kill-buffer
+;;   "s" 'save-buffer
+;;   "q" 'save-buffers-kill-terminal
+;;   "f" 'projectile-find-file
+;;   "p" 'projectile-switch-project
+;;   "b" 'counsel-recentf)
+;; (evil-mode 1)
+;; sed libera nos a malo
 
 (provide 'init-local)
 (server-start)
