@@ -70,7 +70,7 @@
 (setq calendar-longitude 150.93)
 
 (require 'theme-changer)
-(change-theme 'sanityinc-tomorrow-day 'sanityinc-solarized-dark)
+(change-theme 'sanityinc-solarized-dark 'sanityinc-solarized-dark)
 
 (desktop-save-mode 0)
 
@@ -86,47 +86,58 @@
 (define-key ivy-minibuffer-map (kbd "<up>") #'ivy-previous-line)
 
 (require 'ryo-modal)
-
-(global-set-key (kbd "<escape>") 'ryo-modal-mode)
+(global-set-key (kbd "C-c SPC") 'ryo-modal-mode)
 
 (ryo-modal-keys
  ("i" ryo-modal-mode)
  ("h" backward-char)
  ("j" next-line)
  ("k" previous-line)
- ("l" forward-char))
+ ("l" forward-char)
+ ("v" cua-set-mark)
+ ("y p"  yank)
+ ;; ("y y" copy-line)
+ )
 
 (ryo-modal-key "0" #'move-beginning-of-line)
 (ryo-modal-key "$" #'move-end-of-line)
 (ryo-modal-key "SPC b b" #'ivy-switch-buffer)
-(ryo-modal-key "SPC f s" #'save-buffer)
+(ryo-modal-key "SPC f s" #'save-buffer :exit t)
 (ryo-modal-key "SPC p f" #'projectile-find-file :exit t)
 (ryo-modal-key "SPC p p" #'projectile-switch-project :exit t)
-;; (ryo-modal-key "SPC q q" #'save-buffers-kill-terminal)
+(ryo-modal-key "SPC q q" #'save-buffers-kill-terminal)
 
 (ryo-modal-key
  "d" '(
        ("d" kill-whole-line)))
 
-;; (require 'neotree)
-;; (global-set-key [f8] 'neotree-toggle)
-;; (global-set-key (kbd "C-x o") 'other-window)
-;; (setq projectile-switch-project-action 'neotree-projectile-action)
+;; (setq cursor-type 'bar)
 
-;; et ne inducas nos in temptationem
-;; (require 'evil)
-;; (global-evil-leader-mode)
-;; (evil-leader/set-leader "<SPC>")
-;; (evil-leader/set-key
-;;   "b" 'switch-to-buffer
-;;   "k" 'kill-buffer
-;;   "s" 'save-buffer
-;;   "q" 'save-buffers-kill-terminal
-;;   "f" 'projectile-find-file
-;;   "p" 'projectile-switch-project
-;;   "b" 'counsel-recentf)
-;; (evil-mode 1)
-;; sed libera nos a malo
+;; (require 'god-mode)
+;; (define-key god-local-mode-map (kbd ".") 'repeat)
+;; (global-set-key (kbd "<f1> <f2>") 'god-local-mode)
+
+;; (defvar abm-modal-cursor-color "red"
+;;   "The cursor color used in `ryo-modal-mode'.  If nil then use default color.")
+
+;; (defconst abm-default-cursor-color (face-attribute 'cursor :background)
+;;   "Default color of cursor.")
+
+;; (defun c/god-mode-update-cursor ()
+;;   (let ((limited-colors-p (> 257 (length (defined-colors)))))
+;;     (cond (god-local-mode (progn
+;;                             (setq cursor-type 'box)
+;;                             (set-cursor-color abm-modal-cursor-color)
+;;                             (set-face-background 'mode-line (if limited-colors-p "white" "#e9e2cb"))
+;;                             (set-face-background 'mode-line-inactive (if limited-colors-p "white" "#e9e2cb"))))
+;;           (t (progn
+;;                (setq cursor-type 'bar)
+;;                (set-cursor-color abm-default-cursor-color)
+;;                (set-face-background 'mode-line (if limited-colors-p "black" "#0a2832"))
+;;                (set-face-background 'mode-line-inactive (if limited-colors-p "black" "#0a2832")))))))
+
+;; (add-hook 'god-mode-enabled-hook 'c/god-mode-update-cursor)
+;; (add-hook 'god-mode-disabled-hook 'c/god-mode-update-cursor)
 
 (provide 'init-local)
 (server-start)

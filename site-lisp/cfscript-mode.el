@@ -22,13 +22,14 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with GNU Emacs; see the file COPYING.  If not, write to
 ;; the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
-;; Boston, MA 02111-1307, USA.
-
+;; Boston, MA 02111-1307, nn
 ;;}}}
 
 ;;; Commentary:
 
 ;;; Code:
+
+(defface cfml-text-face '((t ())) "Standard text face")
 
 (defun cfscript-indent-to-previous ()
   "Insert a newline character then indent the new line just like the previous line."
@@ -44,7 +45,10 @@
   (electric-indent-local-mode -1))
 
 (font-lock-add-keywords 'cfscript-mode
-                        '(("\\<component\\>" 0 'font-lock-keyword-face prepend)))
+                        '(
+                          ("\\<component\\>" 0 'font-lock-keyword-face prepend)
+                          ("\\<default\\>" 0 'cfml-text-face prepend)
+                          ))
 
 (provide 'cfscript-mode)
 

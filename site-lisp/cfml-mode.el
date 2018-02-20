@@ -55,12 +55,26 @@
 ;;;###autoload
 
 (define-derived-mode cfml-mode html-mode "CFML"
-  (setq sgml-unclosed-tags nil) ; Simplifies indentation logic
+  (setq-local sgml-empty-tags
+              ;; From HTML-4.01's loose.dtd, parsed with
+              ;; `sgml-parse-dtd', plus manual addition of "wbr".
+              '("area" "base" "basefont" "br" "col" "frame" "hr" "img" "input"
+                "isindex" "link" "meta" "param" "wbr"
+                "cfdump" "cfset" "cfinclude" "cfargument" "cfqueryparam" "cfparam" "cfsetting"))
+  (setq-local sgml-unclosed-tags
+              ;; From HTML-4.01's loose.dtd, parsed with `sgml-parse-dtd'.
+              '("body" "colgroup" "dd" "dt" "head" "html" "li" "option"
+                "p" "tbody" "td" "tfoot" "th" "thead" "tr"
+                "cfelse" "cfelseif" "cfreturn"))
+
   (setq tab-stop-list (number-sequence sgml-basic-offset 120 sgml-basic-offset))
   (local-set-key (kbd "RET") 'cfml-indent-to-previous)
-  (electric-indent-local-mode -1)
-  )
-
+  (setq indent-line-function 'sgml-indent-line)
+  (setq comment-start "<!---")
+  (setq comment-end " --->")
+  (setq-local comment-start-skip "<!---[ \t]*")
+  (setq-local comment-end-skip "[ \t]*---[ \t\n]*>")
+  (electric-indent-local-mode -1))
 
 (provide 'cfml-mode)
 
